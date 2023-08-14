@@ -36,6 +36,10 @@ public class DomainRegionsManager {
 		return regionsList;
 	}
 	
+	public static void reload() {
+		_regions = populateRegions();
+	}
+	
 	private static Location getLocationFromConfig(YamlConfiguration config, String path, String locationIndex) {
 		String worldName = config.getString(path + ".World");
 		int x = config.getInt(path + ".Loc" + locationIndex + ".X");

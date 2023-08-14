@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ClanDominanceAlert extends JavaPlugin {
 	
-	public static final String START_DUEL_PERMISSION = "TF_DuelVerifier.StartDuel";
+	public static final String SET_REGION_PERMISSION = "TF_DuelVerifier.StartDuel";
 	public static final String RELOAD_PERMISSION = "TF_DuelVerifier.Reload";
 	
 	@Override
@@ -18,7 +18,7 @@ public class ClanDominanceAlert extends JavaPlugin {
 			saveDefaultConfig();
 		}
 		
-//		getServer().getPluginManager().registerEvents(new DuelVerifierMenu(), this);
+		getServer().getPluginManager().registerEvents(new Events(), this);
 		
 //		getCommand("desafiar").setExecutor(new DuelVerifierCommand());
 	}
