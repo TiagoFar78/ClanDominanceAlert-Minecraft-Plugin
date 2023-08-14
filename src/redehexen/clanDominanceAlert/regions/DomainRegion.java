@@ -12,7 +12,6 @@ public class DomainRegion {
 	private String _name;
 	private Region _region;
 	private DominatorAnnouncer _announcer;
-	private Hashtable<String, Integer> _teamMembersAmount;
 	private Hashtable<String, Alliance> _alliances;
 	private Alliance _currentDominator;
 	
@@ -30,54 +29,116 @@ public class DomainRegion {
 	}
 	
 	public void playerEntered(Team team) {
-		// cria alianca nova e recolhe as equipas aliadas e adiciona os jogadores à aliança se for preciso
+		String teamName = team.getName();
 		
-		// adiciona um a equipa
+		if (!_alliances.contains(teamName)) {
+			Alliance alliance = new Alliance(teamName);
+			_alliances.put(teamName, alliance);
+			
+			for (String alliedName : team.getAlliedTeams()) {
+				if (_alliances.containsKey(alliedName)) {
+					alliance.addPlayersFromAlliedTeam(_alliances.get(alliedName).getFounderMembers());
+				}
+			}
+		}
 		
-		// adiciona às alianças das equipas aliadas 1
+		_alliances.get(teamName).addPlayerFromFounder();
 		
+		for (String alliedName : team.getAlliedTeams()) {
+			if (_alliances.containsKey(alliedName)) {
+				_alliances.get(alliedName).addPlayerFromAlliedTeam();
+			}
+		}
+		
+		setNewDominator();
 	}
 	
 	public void playerLeft(Team team) {
-		// remove um da equipa
+		Alliance alliance = _alliances.get(team.getName());
 		
-		// apaga a equipa das equipas aliadas se for team == 0
+		alliance.removePlayerFromFounder();
 		
-		// remove um da aliança
+		if (!alliance.founderTeamIsAlive()) {
+			for (String alliedName : alliance.getAllianceMembers()) {
+				_alliances.get(alliedName).removeTeam(alliedName);
+			}
+			
+			_alliances.remove(team.getName());
+		}
 		
-		// remove um de todos os aliados
+		for (String alliedName : team.getAlliedTeams()) {
+			if (_alliances.containsKey(alliedName)) {
+				_alliances.get(alliedName).removePlayerFromAlliedTeam();
+			}
+		}
 		
+		setNewDominator();
 	}
 	
 	public void removeAlliance(String team1Name, String team2Name) {
-		// remove a aliaca
+		Alliance team1Alliance = _alliances.get(team1Name);
+		Alliance team2Alliance = _alliances.get(team2Name);
 		
-		// remove os membros de cada equipa da sua alianca
+		team1Alliance.removeTeam(team2Name);
+		team2Alliance.removeTeam(team1Name);
 		
+		team1Alliance.removePlayersFromAlliedTeam(team2Alliance.getFounderMembers());
+		team2Alliance.removePlayersFromAlliedTeam(team1Alliance.getFounderMembers());		
+		
+		setNewDominator();
 	}
 	
 	public void addAlliance(String team1Name, String team2Name) {
-		// adiciona a alianca
+		Alliance team1Alliance = _alliances.get(team1Name);
+		Alliance team2Alliance = _alliances.get(team2Name);
 		
-		// adiciona o numero de membros da equipa aliada a ambas as aliancas
+		team1Alliance.addTeam(team2Name);
+		team2Alliance.addTeam(team1Name);
+		
+		team1Alliance.addPlayersFromAlliedTeam(team2Alliance.getFounderMembers());
+		team2Alliance.addPlayersFromAlliedTeam(team1Alliance.getFounderMembers());
+		
+		setNewDominator();
 	}
 	
-	private void calculateNewDominator() {
-		// fazer uma lista ordenada das alliances e usar a primeira
+	private Alliance calculateNewDominator() {
+		if (_alliances.size() == 0) {
+			return null;
+		}
+		
+		Alliance bestAlliance = _currentDominator;
+		for (Alliance alliance : _alliances.values()) {
+			if (alliance.getTotalMembers() > bestAlliance.getTotalMembers()) {
+				bestAlliance = alliance;
+			}
+		}
+		
+		return bestAlliance;
 	}
 	
-	private boolean isDifferentDominator(Alliance newDominator) {
-		return !_currentDominator.getAllianceMembers().containsAll(newDominator.getAllianceMembers());
+	private boolean isSameDominator(Alliance newDominator) {
+		if (_currentDominator == null) {
+			return newDominator != null;
+		}
+		
+		return _currentDominator.getAllianceMembers().containsAll(newDominator.getAllianceMembers());
 	}
 	
-	private void newDominator(Alliance alliance) {
-		// se for o dominator é para cagar
+	private void setNewDominator() {
+		setNewDominator(calculateNewDominator());
+	}
+	
+	private void setNewDominator(Alliance alliance) {
+		if (isSameDominator(alliance)) {
+			return;
+		}
 		
-		// cancel announcer
+		_currentDominator = alliance;
+		_announcer.cancel();
 		
-		// create new announcer
-		
-		// muda o current dominator
+		if (alliance != null) {
+			_announcer = new DominatorAnnouncer(alliance);
+		}
 	}
 	
 	

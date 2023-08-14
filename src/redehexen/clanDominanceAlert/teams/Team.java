@@ -16,16 +16,12 @@ public class Team {
 		return _name;
 	}
 	
+	public List<String> getAlliedTeams() {
+		return _alliesNames;
+	}
+	
 	public boolean isAllied(String teamName) {
 		return _alliesNames.contains(teamName);
-	}
-	
-	public void addAlliance(String teamName) {
-		_alliesNames.add(teamName);
-	}
-	
-	public void removeAlliance(String teamName) {
-		_alliesNames.remove(teamName);
 	}
 
 }
