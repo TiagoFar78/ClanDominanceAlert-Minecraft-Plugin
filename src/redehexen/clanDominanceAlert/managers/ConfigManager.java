@@ -35,8 +35,8 @@ public class ConfigManager {
 		
 		_dominationAlertDelay = config.getInt("DominationAlertDelay");
 		
-		_dominatingMessageSingular = ;
-		_dominatingMessagePlural;
+		_dominatingMessageSingular = config.getString("Messages.Warnings.DominatingMessageSingular").replace("&", "§");
+		_dominatingMessagePlural = config.getString("Messages.Warnings.DominatingMessagePlural").replace("&", "§");
 		_positionSetMessage = config.getString("Messages.Warnings.PositionSet").replace("&", "§");
 		_reloadedMessage = config.getString("Messages.Warnings.Reloaded").replace("&", "§");
 		
@@ -47,6 +47,18 @@ public class ConfigManager {
 		_setPositionUsageMessage = config.getString("Messages.Usage.SetPosition").replace("&", "§");
 		_reloadUsageMessage = config.getString("Messages.Usage.Reload").replace("&", "§");
 	}
+	
+	public int getDominationAlertDelay() {
+        return _dominationAlertDelay;
+    }
+
+    public String getDominatingMessageSingular() {
+        return _dominatingMessageSingular;
+    }
+
+    public String getDominatingMessagePlural() {
+        return _dominatingMessagePlural;
+    }
 	
 	public String getPositionSetMessage() {
         return _positionSetMessage;
