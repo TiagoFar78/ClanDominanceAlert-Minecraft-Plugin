@@ -137,7 +137,7 @@ public class DomainRegion {
 		_announcer.cancel();
 		
 		if (alliance != null) {
-			_announcer = new DominatorAnnouncer(alliance);
+			_announcer = new DominatorAnnouncer(alliance, _name);
 		}
 	}
 	

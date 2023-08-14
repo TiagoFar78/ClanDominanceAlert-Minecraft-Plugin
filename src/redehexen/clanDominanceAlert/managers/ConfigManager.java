@@ -20,6 +20,8 @@ public class ConfigManager {
 	
 	private String _dominatingMessageSingular;
 	private String _dominatingMessagePlural;
+	private String _dominatingTeamJoinerMessage;
+	private String _dominatingLastJoinerMessage;
 	private String _positionSetMessage;
 	private String _reloadedMessage;
 	
@@ -37,6 +39,8 @@ public class ConfigManager {
 		
 		_dominatingMessageSingular = config.getString("Messages.Warnings.DominatingMessageSingular").replace("&", "§");
 		_dominatingMessagePlural = config.getString("Messages.Warnings.DominatingMessagePlural").replace("&", "§");
+		_dominatingTeamJoinerMessage = config.getString("Messages.Warnings.TeamsJoiner");
+		_dominatingLastJoinerMessage = config.getString("Messages.Warnings.LastTeamJoiner");
 		_positionSetMessage = config.getString("Messages.Warnings.PositionSet").replace("&", "§");
 		_reloadedMessage = config.getString("Messages.Warnings.Reloaded").replace("&", "§");
 		
@@ -58,6 +62,14 @@ public class ConfigManager {
 
     public String getDominatingMessagePlural() {
         return _dominatingMessagePlural;
+    }
+    
+    public String getDominatingTeamJoinerMessage() {
+        return _dominatingTeamJoinerMessage;
+    }
+
+    public String getDominatingLastJoinerMessage() {
+        return _dominatingLastJoinerMessage;
     }
 	
 	public String getPositionSetMessage() {

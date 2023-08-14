@@ -13,7 +13,9 @@ Regions:
 Messages:
   Warnings:
     DominatingMessageSingular: "&eClan {CLAN} has been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
-    DominatingMessagePlural: "&eClans {ALLIANCE} have been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
+    DominatingMessagePlural: "&eClans {CLAN} have been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
+    TeamsJoiner: ", "
+    LastTeamJoiner: " and "
     PositionSet: "&aPosition set successfully. Dont forget to use &f/ClanDominanceAlert reload"
     Reloaded: "&aConfig was reloaded successfully"
   Errors:

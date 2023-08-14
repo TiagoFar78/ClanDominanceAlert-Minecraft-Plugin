@@ -34,6 +34,10 @@ public class Alliance {
 		return _alliedTeams;
 	}
 	
+	public boolean hasAllies() {
+		return _alliedTeamsMembers != 0;
+	}
+	
 	public void addPlayersFromAlliedTeam(int alliedTeamMembers) {
 		_alliedTeamsMembers += alliedTeamMembers;
 	}
