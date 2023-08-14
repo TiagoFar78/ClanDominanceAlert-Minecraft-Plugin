@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
+import redehexen.clanDominanceAlert.managers.ConfigManager;
 
 public class SetRegionSubcommand implements ClanDominanceAlertSubcommand {
 

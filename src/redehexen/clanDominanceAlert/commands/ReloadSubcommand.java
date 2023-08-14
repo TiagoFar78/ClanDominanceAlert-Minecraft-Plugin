@@ -3,6 +3,7 @@ package redehexen.clanDominanceAlert.commands;
 import org.bukkit.command.CommandSender;
 
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
+import redehexen.clanDominanceAlert.managers.ConfigManager;
 import redehexen.clanDominanceAlert.managers.DomainRegionsManager;
 
 public class ReloadSubcommand implements ClanDominanceAlertSubcommand {

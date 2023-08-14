@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import redehexen.clanDominanceAlert.commands.ClanDominanceAlertCommand;
+
 public class ClanDominanceAlert extends JavaPlugin {
 	
 	public static final String SET_REGION_PERMISSION = "TF_DuelVerifier.StartDuel";
@@ -20,7 +22,7 @@ public class ClanDominanceAlert extends JavaPlugin {
 		
 		getServer().getPluginManager().registerEvents(new Events(), this);
 		
-//		getCommand("desafiar").setExecutor(new DuelVerifierCommand());
+		getCommand("clandominancealert").setExecutor(new ClanDominanceAlertCommand());
 	}
 	
 	public static YamlConfiguration getYamlConfiguration() {
