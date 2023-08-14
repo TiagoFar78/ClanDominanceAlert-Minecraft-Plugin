@@ -1,3 +1,4 @@
+DominationAlertDelay: 300
 Regions:
   MinaPvP:
     World:
@@ -11,6 +12,8 @@ Regions:
       Z:
 Messages:
   Warnings:
+    DominatingMessageSingular: "&eClan {CLAN} has been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
+    DominatingMessagePlural: "&eClans {ALLIANCE} have been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
     PositionSet: "&aPosition set successfully. Dont forget to use &f/ClanDominanceAlert reload"
     Reloaded: "&aConfig was reloaded successfully"
   Errors:

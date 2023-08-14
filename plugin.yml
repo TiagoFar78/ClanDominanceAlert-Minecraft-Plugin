@@ -1,0 +1,8 @@
+name: TF_ClanDominanceAlert
+version: 1.0
+author: TiagoFar78
+main: redehexen.clanDominanceAlert.ClanDominanceAlert
+commands:
+  ClanDominanceAlert:
+depend:
+- SimpleClans

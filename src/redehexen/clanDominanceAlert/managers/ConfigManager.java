@@ -16,6 +16,10 @@ public class ConfigManager {
 		instance = new ConfigManager();
 	}
 	
+	private int _dominationAlertDelay;
+	
+	private String _dominatingMessageSingular;
+	private String _dominatingMessagePlural;
 	private String _positionSetMessage;
 	private String _reloadedMessage;
 	
@@ -29,6 +33,10 @@ public class ConfigManager {
 	private ConfigManager() {
 		YamlConfiguration config = ClanDominanceAlert.getYamlConfiguration();
 		
+		_dominationAlertDelay = config.getInt("DominationAlertDelay");
+		
+		_dominatingMessageSingular = ;
+		_dominatingMessagePlural;
 		_positionSetMessage = config.getString("Messages.Warnings.PositionSet").replace("&", "§");
 		_reloadedMessage = config.getString("Messages.Warnings.Reloaded").replace("&", "§");
 		
