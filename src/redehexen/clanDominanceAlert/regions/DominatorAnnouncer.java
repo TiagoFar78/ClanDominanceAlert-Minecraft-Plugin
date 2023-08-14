@@ -10,14 +10,14 @@ public class DominatorAnnouncer {
 	public DominatorAnnouncer(Alliance alliance) {
 		_alliance = alliance;
 		
-		processAnnouncement();
+		scheduleAnnouncement();
 	}
 	
 	public void cancel() {
 		_isCancelled = true;
 	}
 	
-	public void processAnnouncement() {
+	public void scheduleAnnouncement() {
 		
 	}
 
