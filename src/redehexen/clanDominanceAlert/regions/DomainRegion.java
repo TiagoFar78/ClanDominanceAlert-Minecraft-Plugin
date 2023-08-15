@@ -1,5 +1,6 @@
 package redehexen.clanDominanceAlert.regions;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -35,12 +36,16 @@ public class DomainRegion {
 		String teamName = team.getName();
 		
 		if (!_alliances.containsKey(teamName)) {
+			System.out.println("Criou uma equipa nova");
 			Alliance alliance = new Alliance(teamName);
 			_alliances.put(teamName, alliance);
 			
 			for (String alliedName : team.getAlliedTeams()) {
+				System.out.println("Nao devia entrar aqui lol");
 				if (_alliances.containsKey(alliedName)) {
-					alliance.addPlayersFromAlliedTeam(_alliances.get(alliedName).getFounderMembers());
+					Alliance alliedAlliance = _alliances.get(alliedName);
+					alliance.addPlayersFromAlliedTeam(alliedAlliance.getFounderMembers());
+					alliedAlliance.addTeam(teamName);
 				}
 			}
 		}
@@ -64,7 +69,9 @@ public class DomainRegion {
 		alliance.removePlayerFromFounder();
 		
 		if (!alliance.founderTeamIsAlive()) {
-			for (String alliedName : alliance.getAllianceMembers()) {
+			List<String> teamAllies = new ArrayList<String>();
+			teamAllies.addAll(alliance.getAllianceMembers());
+			for (String alliedName : teamAllies) {
 				_alliances.get(alliedName).removeTeam(team.getName());
 			}
 			
@@ -134,10 +141,10 @@ public class DomainRegion {
 			return false;
 		}
 		
-		List<String> currentDominatorAlliance = _currentDominator.getAllianceMembers();
+		List<String> currentDominatorAlliance = new ArrayList<String>(_currentDominator.getAllianceMembers());
 		currentDominatorAlliance.add(_currentDominator.getFounderName());
 		
-		List<String> newDominatorAlliance = newDominator.getAllianceMembers();
+		List<String> newDominatorAlliance = new ArrayList<String>(newDominator.getAllianceMembers());
 		newDominatorAlliance.add(newDominator.getFounderName());
 		
 		return currentDominatorAlliance.containsAll(newDominatorAlliance);

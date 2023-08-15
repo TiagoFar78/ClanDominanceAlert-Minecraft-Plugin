@@ -18,7 +18,7 @@ public class DominatorAnnouncer {
 	private BukkitTask _task;
 	private int _announcesAmount = 0;
 	
-	public DominatorAnnouncer(Alliance alliance, String regionName) {		
+	public DominatorAnnouncer(Alliance alliance, String regionName) {
 		_alliance = alliance;
 		_regionName = regionName;
 		
