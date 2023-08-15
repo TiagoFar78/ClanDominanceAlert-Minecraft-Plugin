@@ -11,9 +11,9 @@ public class DomainRegion {
 	
 	private String _name;
 	private Region _region;
-	private DominatorAnnouncer _announcer;
-	private Hashtable<String, Alliance> _alliances;
-	private Alliance _currentDominator;
+	private DominatorAnnouncer _announcer = null;
+	private Hashtable<String, Alliance> _alliances = new Hashtable<String, Alliance>();
+	private Alliance _currentDominator = null;
 	
 	public DomainRegion(String name, Location loc1, Location loc2) {
 		_name = name;
@@ -29,6 +29,8 @@ public class DomainRegion {
 	}
 	
 	public void playerEntered(Team team) {
+		System.out.println("Player enter for team: " + team.getName());
+		
 		String teamName = team.getName();
 		
 		if (!_alliances.contains(teamName)) {
@@ -54,6 +56,8 @@ public class DomainRegion {
 	}
 	
 	public void playerLeft(Team team) {
+		System.out.println("Player left for team: " + team.getName());
+		
 		Alliance alliance = _alliances.get(team.getName());
 		
 		alliance.removePlayerFromFounder();
@@ -107,9 +111,13 @@ public class DomainRegion {
 		}
 		
 		Alliance bestAlliance = _currentDominator;
+		int highestMembers = bestAlliance == null ? 0 : bestAlliance.getTotalMembers();
 		for (Alliance alliance : _alliances.values()) {
-			if (alliance.getTotalMembers() > bestAlliance.getTotalMembers()) {
+			int totalMembers = alliance.getTotalMembers();
+			
+			if (totalMembers > highestMembers) {
 				bestAlliance = alliance;
+				highestMembers = totalMembers;
 			}
 		}
 		
@@ -118,7 +126,11 @@ public class DomainRegion {
 	
 	private boolean isSameDominator(Alliance newDominator) {
 		if (_currentDominator == null) {
-			return newDominator != null;
+			return newDominator == null;
+		}
+		
+		if (newDominator == null) {
+			return false;
 		}
 		
 		return _currentDominator.getAllianceMembers().containsAll(newDominator.getAllianceMembers());
@@ -129,12 +141,16 @@ public class DomainRegion {
 	}
 	
 	private void setNewDominator(Alliance alliance) {
+		System.out.println("New dominator: " + (alliance == null ? "null" : alliance.getFounderName()) + " / Prev : " + (_currentDominator == null ? "null" : _currentDominator.getFounderName()));
 		if (isSameDominator(alliance)) {
 			return;
 		}
 		
 		_currentDominator = alliance;
-		_announcer.cancel();
+		
+		if (_announcer != null) {
+			_announcer.cancel();
+		}
 		
 		if (alliance != null) {
 			_announcer = new DominatorAnnouncer(alliance, _name);

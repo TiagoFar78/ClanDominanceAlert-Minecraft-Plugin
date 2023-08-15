@@ -11,8 +11,8 @@ import redehexen.clanDominanceAlert.commands.ClanDominanceAlertCommand;
 
 public class ClanDominanceAlert extends JavaPlugin {
 	
-	public static final String SET_REGION_PERMISSION = "TF_DuelVerifier.StartDuel";
-	public static final String RELOAD_PERMISSION = "TF_DuelVerifier.Reload";
+	public static final String SET_REGION_PERMISSION = "TF_ClanDominanceAlert.SetPosition";
+	public static final String RELOAD_PERMISSION = "TF_ClanDominanceAlert.Reload";
 	
 	@Override
 	public void onEnable() {		

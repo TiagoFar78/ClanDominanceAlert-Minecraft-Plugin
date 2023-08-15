@@ -18,8 +18,9 @@ public class DominatorAnnouncer {
 	private BukkitTask _task;
 	private int _announcesAmount = 0;
 	
-	public DominatorAnnouncer(Alliance alliance, String regionName) {
+	public DominatorAnnouncer(Alliance alliance, String regionName) {		
 		_alliance = alliance;
+		_regionName = regionName;
 		
 		scheduleAnnouncement();
 	}
@@ -40,7 +41,7 @@ public class DominatorAnnouncer {
 				_announcesAmount++;
 				
 				boolean hasAllies = _alliance.hasAllies();
-				String dominatingMessage = hasAllies ? configManager.getDominatingMessageSingular() : configManager.getDominatingMessagePlural();
+				String dominatingMessage = !hasAllies ? configManager.getDominatingMessageSingular() : configManager.getDominatingMessagePlural();
 				
 				String allianceClans = getAllianceClans(configManager);
 				int dominationMinutes = announcementDelay * _announcesAmount / 60;

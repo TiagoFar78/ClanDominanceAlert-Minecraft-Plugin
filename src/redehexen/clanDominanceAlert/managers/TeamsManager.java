@@ -10,6 +10,9 @@ public class TeamsManager {
 	
 	public static Team getTeam(String playerName) {
 		Clan clan = simpleClans.getClanManager().getClanByPlayerName(playerName);
+		if (clan == null) {
+			return null;
+		}
 		
 		return new Team(clan.getTag(), clan.getAllies());
 	}
