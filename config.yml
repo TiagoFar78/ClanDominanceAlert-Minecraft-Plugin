@@ -1,3 +1,4 @@
+LeaveAreaOnDisconnecting: true
 DominationAlertDelay: 300
 Regions:
   Gold:

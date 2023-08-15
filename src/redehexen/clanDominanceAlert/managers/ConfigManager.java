@@ -16,6 +16,7 @@ public class ConfigManager {
 		instance = new ConfigManager();
 	}
 	
+	private boolean _leaveAreaOnDisconnecting;
 	private int _dominationAlertDelay;
 	
 	private String _dominatingMessageSingular;
@@ -35,6 +36,7 @@ public class ConfigManager {
 	private ConfigManager() {
 		YamlConfiguration config = ClanDominanceAlert.getYamlConfiguration();
 		
+		_leaveAreaOnDisconnecting = config.getBoolean("LeaveAreaOnDisconnecting");
 		_dominationAlertDelay = config.getInt("DominationAlertDelay");
 		
 		_dominatingMessageSingular = config.getString("Messages.Warnings.DominatingMessageSingular").replace("&", "§");
@@ -51,6 +53,10 @@ public class ConfigManager {
 		_setPositionUsageMessage = config.getString("Messages.Usage.SetPosition").replace("&", "§");
 		_reloadUsageMessage = config.getString("Messages.Usage.Reload").replace("&", "§");
 	}
+	
+	public boolean doesLeaveAreaOnDisconnecting() {
+        return _leaveAreaOnDisconnecting;
+    }
 	
 	public int getDominationAlertDelay() {
         return _dominationAlertDelay;

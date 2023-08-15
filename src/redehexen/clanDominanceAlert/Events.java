@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import redehexen.clanDominanceAlert.managers.ConfigManager;
 import redehexen.clanDominanceAlert.managers.DomainRegionsManager;
 
 public class Events implements Listener {
@@ -31,8 +32,11 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		Player player = e.getPlayer();
-		DomainRegionsManager.detectAbandoning(player.getLocation(), player.getName());
+		ConfigManager configManager = ConfigManager.getInstance();
+		if (configManager.doesLeaveAreaOnDisconnecting()) {
+			Player player = e.getPlayer();
+			DomainRegionsManager.detectAbandoning(player.getLocation(), player.getName());
+		}
 	}
 	
 	@EventHandler
