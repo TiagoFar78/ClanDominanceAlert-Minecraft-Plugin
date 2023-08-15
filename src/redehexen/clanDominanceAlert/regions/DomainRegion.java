@@ -1,6 +1,7 @@
 package redehexen.clanDominanceAlert.regions;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.bukkit.Location;
 
@@ -33,7 +34,7 @@ public class DomainRegion {
 		
 		String teamName = team.getName();
 		
-		if (!_alliances.contains(teamName)) {
+		if (!_alliances.containsKey(teamName)) {
 			Alliance alliance = new Alliance(teamName);
 			_alliances.put(teamName, alliance);
 			
@@ -64,7 +65,7 @@ public class DomainRegion {
 		
 		if (!alliance.founderTeamIsAlive()) {
 			for (String alliedName : alliance.getAllianceMembers()) {
-				_alliances.get(alliedName).removeTeam(alliedName);
+				_alliances.get(alliedName).removeTeam(team.getName());
 			}
 			
 			_alliances.remove(team.getName());
@@ -133,7 +134,13 @@ public class DomainRegion {
 			return false;
 		}
 		
-		return _currentDominator.getAllianceMembers().containsAll(newDominator.getAllianceMembers());
+		List<String> currentDominatorAlliance = _currentDominator.getAllianceMembers();
+		currentDominatorAlliance.add(_currentDominator.getFounderName());
+		
+		List<String> newDominatorAlliance = newDominator.getAllianceMembers();
+		newDominatorAlliance.add(newDominator.getFounderName());
+		
+		return currentDominatorAlliance.containsAll(newDominatorAlliance);
 	}
 	
 	private void setNewDominator() {

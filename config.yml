@@ -1,16 +1,6 @@
 LeaveAreaOnDisconnecting: true
 DominationAlertDelay: 300
 Regions:
-  Gold:
-    World:
-    Loc1:
-      X:
-      Y:
-      Z:
-    Loc2:
-      X:
-      Y:
-      Z:
 Messages:
   Warnings:
     DominatingMessageSingular: "&eClan {CLAN} has been dominating {AREA} for {TIME} minutes with {MEMBERS} members"
