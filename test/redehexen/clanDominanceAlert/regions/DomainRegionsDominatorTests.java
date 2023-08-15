@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class DomainRegionsDominatorTests {
 
 	@Test
-	void test() {
+	void testSingleClanSinglePlayer() {
 		fail("Not yet implemented");
 	}
 
