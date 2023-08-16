@@ -191,7 +191,7 @@ class DomainRegionsDominatorTests {
 		domainRegion.playerLeft(team2);
 		
 		expectedWinners = new ArrayList<Team>();
-		expectedWinners.add(team2);
+		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
@@ -212,7 +212,7 @@ class DomainRegionsDominatorTests {
 		domainRegion.playerLeft(team3);
 		
 		expectedWinners = new ArrayList<Team>();
-		expectedWinners.add(team3);
+		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		

@@ -76,8 +76,6 @@ public class DomainRegion {
 //	>-------------------------------------{ Player }-------------------------------------<
 	
 	public void playerEntered(Team team) {
-		System.out.println("Player enter for team: " + team.getName());
-		
 		if (!alreadyExists(team)) {
 			createTeam(team);
 		}
@@ -88,8 +86,6 @@ public class DomainRegion {
 	}
 	
 	public void playerLeft(Team team) {
-		System.out.println("Player left for team: " + team.getName());
-		
 		removePlayerFromTeam(team);
 		
 		if (isTeamExtint(team)) {
@@ -112,37 +108,42 @@ public class DomainRegion {
 			return _teams;
 		}
 		
-		return getMostPopulatedTeamAlliance();
-	}
-	
-	private List<Team> getMostPopulatedTeamAlliance() {
-		return getMostPopulatedTeamAllianceAux(new ArrayList<Team>(), 0, new ArrayList<Team>());
-	}
-	
-	private List<Team> getMostPopulatedTeamAllianceAux(List<Team> fixedTeams, int firstIndex, List<Team> mostPopulatedAlliance) {		
-		List<Team> newFixedTeams = new ArrayList<Team>(fixedTeams);
+		List<Team> bestAlliance = null;
+		int maxMembers = 0;
 		
-		boolean addedANewTeam = false;
-		for (int i = firstIndex; i < _teams.size(); i++) {
-			Team team = _teams.get(i);
-			
-			if (isAlliedToEveryTeam(newFixedTeams, team)) {
-				newFixedTeams.add(team);
-				addedANewTeam = true;
-				firstIndex = i;
-				break;
+		for (List<Team> alliance : getAlliances()) {
+			int allianceMembers = Team.getTeamsTotalMembers(alliance);
+			if (allianceMembers > maxMembers) {
+				bestAlliance = alliance;
+				maxMembers = allianceMembers;
 			}
 		}
 		
-		if (Team.getTeamsTotalMembers(newFixedTeams) > Team.getTeamsTotalMembers(mostPopulatedAlliance)) {
-			mostPopulatedAlliance = fixedTeams;
+		return bestAlliance;
+	}
+	
+	private List<List<Team>> getAlliances() {
+		return getAlliancesAux(0, new ArrayList<Team>());
+	}
+	
+	private List<List<Team>> getAlliancesAux(int firstIndex, List<Team> currentAlliance) {
+		List<List<Team>> alliances = new ArrayList<List<Team>>();
+		if (currentAlliance.size() != 0) {
+			alliances.add(currentAlliance);
 		}
 		
-		if (!addedANewTeam) {
-			return mostPopulatedAlliance;
+		for (int i = firstIndex; i < _teams.size(); i++) {
+			Team team = _teams.get(i);
+			
+			if (isAlliedToEveryTeam(currentAlliance, team)) {
+				List<Team> newCurrentAlliance = new ArrayList<Team>(currentAlliance);
+				newCurrentAlliance.add(team);
+				
+				alliances.addAll(getAlliancesAux(i + 1, newCurrentAlliance));
+			}
 		}
 		
-		return getMostPopulatedTeamAllianceAux(newFixedTeams, firstIndex, mostPopulatedAlliance);
+		return alliances;
 	}
 	
 	private boolean isAlliedToEveryTeam(List<Team> alliedTeams, Team team) {
@@ -180,8 +181,7 @@ public class DomainRegion {
 		}
 		
 		if (alliance != null) {
-			//_announcer = new DominatorAnnouncer(alliance, _name);
-			System.out.println("schedulou o announcer");
+			// TODO _announcer = new DominatorAnnouncer(alliance, _name);
 		}
 	}
 	
