@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
 import redehexen.clanDominanceAlert.managers.ConfigManager;
 import redehexen.clanDominanceAlert.teams.Alliance;
+import redehexen.clanDominanceAlert.teams.Team;
 
 public class DominatorAnnouncer {
 	
@@ -18,7 +19,7 @@ public class DominatorAnnouncer {
 	private BukkitTask _task;
 	private int _announcesAmount = 0;
 	
-	public DominatorAnnouncer(Alliance alliance, String regionName) {
+	public DominatorAnnouncer(List<Team> alliance, String regionName) {
 		_alliance = alliance;
 		_regionName = regionName;
 		

@@ -1,7 +1,5 @@
 package redehexen.clanDominanceAlert.managers;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import net.sacredlabyrinth.phaed.simpleclans.Clan;
@@ -22,9 +20,9 @@ public class TeamsManager {
 	}
 	
 	public static List<String> getAlliesNames(String tag) {
-		if (allies != null) {
-			return allies.get(tag) == null ? new ArrayList<String>() : allies.get(tag);
-		}
+//		if (allies != null) {
+//			return allies.get(tag) == null ? new ArrayList<String>() : allies.get(tag);
+//		}
 		
 		Clan clan = simpleClans.getClanManager().getClan(tag);
 		if (clan == null) {
@@ -36,14 +34,14 @@ public class TeamsManager {
 	
 //	TESTING ONLY
 	
-	private static Hashtable<String, List<String>> allies = new Hashtable<String, List<String>>();
-	
-	public static void clear() {
-		allies.clear();
-	}
-	
-	public static void addAllies(String team, List<String> teamAllies) {
-		allies.put(team, teamAllies);
-	}
+//	private static Hashtable<String, List<String>> allies = new Hashtable<String, List<String>>();
+//	
+//	public static void clear() {
+//		allies.clear();
+//	}
+//	
+//	public static void addAllies(String team, List<String> teamAllies) {
+//		allies.put(team, teamAllies);
+//	}
 
 }
