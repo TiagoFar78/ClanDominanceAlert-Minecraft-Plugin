@@ -17,9 +17,9 @@ public class DomainRegion {
 	private List<Team> _teams = new ArrayList<Team>();
 	private List<Team> _currentDominators = new ArrayList<Team>();
 	
-//	public DomainRegion() {
-//		// TESTING ONLY
-//	}
+	public DomainRegion() {
+		// TESTING ONLY
+	}
 	
 //	>-------------------------------------{ Region }-------------------------------------<
 	
