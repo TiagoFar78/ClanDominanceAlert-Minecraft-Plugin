@@ -1,6 +1,6 @@
 package redehexen.clanDominanceAlert.regions;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import redehexen.clanDominanceAlert.teams.DominatingAlliance;
+import redehexen.clanDominanceAlert.managers.TeamsManager;
 import redehexen.clanDominanceAlert.teams.Team;
 
 class DomainRegionsDominatorTests {
@@ -17,27 +17,30 @@ class DomainRegionsDominatorTests {
 	
 	private static DomainRegion domainRegion;
 	
+	private boolean areSameAlliances(List<Team> alliance1, List<Team> alliance2) {
+		return alliance1.containsAll(alliance2) && alliance1.size() == alliance2.size();
+	}
+	
+	
 	@Before
 	void setUp() {
 		domainRegion = new DomainRegion();
+		
+		TeamsManager.clear();
 	}
 	
 	@Test
 	void testSingleClanSinglePlayer() {
 		setUp();
 		
-		Team team1 = new Team(TESTING_TEAM_NAME, new ArrayList<String>());
+		Team team1 = new Team(TESTING_TEAM_NAME);
 		
 		domainRegion.playerEntered(team1);
 		
-		List<String> expectedWinners = new ArrayList<String>();
-		DominatingAlliance expectedAlliance = new DominatingAlliance(TESTING_TEAM_NAME, expectedWinners, 1);
+		List<Team> expectedWinners = new ArrayList<Team>();
+		expectedWinners.add(team1);
 		
-		System.out.println(expectedAlliance.getTeamsNames());
-		System.out.println(domainRegion.getWinning().getTeamsNames());
-		System.out.println("expected: " + expectedAlliance.getTotalMembers() + " / got: " + domainRegion.getWinning().getTotalMembers());
-		
-		assertTrue(domainRegion.getWinning().equals(expectedAlliance));
+		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 	}
 
 }

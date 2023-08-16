@@ -1,14 +1,12 @@
 package redehexen.clanDominanceAlert.regions;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.Location;
 
 import redehexen.clanDominanceAlert.managers.TeamsManager;
-import redehexen.clanDominanceAlert.teams.Alliance;
-import redehexen.clanDominanceAlert.teams.DominatingAlliance;
 import redehexen.clanDominanceAlert.teams.Team;
 
 public class DomainRegion {
@@ -114,15 +112,14 @@ public class DomainRegion {
 			return null;
 		}
 		
-		
-		
-		return bestAlliance;
+		return getMostPopulatedTeamAlliance();
 	}
 	
-	private List<Team> getMostPopulatedTeamAlliance(List<Team> fixedTeams, int firstIndex) {
-		List<Team> mostPopulatedTeams = new ArrayList<Team>();
-		int mostPlayers = 0;
-		
+	private List<Team> getMostPopulatedTeamAlliance() {
+		return getMostPopulatedTeamAllianceAux(new ArrayList<Team>(), 0, new ArrayList<Team>());
+	}
+	
+	private List<Team> getMostPopulatedTeamAllianceAux(List<Team> fixedTeams, int firstIndex, List<Team> mostPopulatedAlliance) {		
 		List<Team> newFixedTeams = new ArrayList<Team>(fixedTeams);
 		
 		boolean addedANewTeam = false;
@@ -133,52 +130,50 @@ public class DomainRegion {
 				newFixedTeams.add(team);
 				addedANewTeam = true;
 				firstIndex = i;
+				break;
 			}
 		}
 		
-		if (!addedANewTeam) {
-			return newFixedTeams;
+		if (Team.getTeamsTotalMembers(newFixedTeams) > Team.getTeamsTotalMembers(mostPopulatedAlliance)) {
+			mostPopulatedAlliance = fixedTeams;
 		}
 		
-		return getMostPopulatedTeamAlliance(newFixedTeams, firstIndex);
+		if (!addedANewTeam) {
+			return mostPopulatedAlliance;
+		}
+		
+		return getMostPopulatedTeamAllianceAux(newFixedTeams, firstIndex, mostPopulatedAlliance);
 	}
 	
 	private boolean isAlliedToEveryTeam(List<Team> alliedTeams, Team team) {
 		List<String> alliesNames = TeamsManager.getAlliesNames(team.getName());
-		List<String> alliedTeamsNames = alliedTeams.stream().map(Team::getName).toList();
+		List<String> alliedTeamsNames = alliedTeams.stream().map(Team::getName).collect(Collectors.toList());
 		
 		return alliesNames.containsAll(alliedTeamsNames);
 	}
 	
-	private boolean isSameDominator(Alliance newDominator) {
-		if (_currentDominator == null) {
-			return newDominator == null;
+	private boolean isSameDominator(List<Team> newDominators) {
+		if (_currentDominators.size() == 0) {
+			return newDominators.size() == 0;
 		}
 		
-		if (newDominator == null) {
+		if (newDominators.size() == 0) {
 			return false;
 		}
 		
-		List<String> currentDominatorAlliance = new ArrayList<String>(_currentDominator.getAllianceMembers());
-		currentDominatorAlliance.add(_currentDominator.getFounderName());
-		
-		List<String> newDominatorAlliance = new ArrayList<String>(newDominator.getAllianceMembers());
-		newDominatorAlliance.add(newDominator.getFounderName());
-		
-		return currentDominatorAlliance.containsAll(newDominatorAlliance);
+		return _currentDominators.size() == newDominators.size() && _currentDominators.containsAll(newDominators);
 	}
 	
 	private void setNewDominator() {
 		setNewDominator(calculateNewDominator());
 	}
 	
-	private void setNewDominator(Alliance alliance) {
-		System.out.println("New dominator: " + (alliance == null ? "null" : alliance.getFounderName()) + " / Prev : " + (_currentDominator == null ? "null" : _currentDominator.getFounderName()));
+	private void setNewDominator(List<Team> alliance) {
 		if (isSameDominator(alliance)) {
 			return;
 		}
 		
-		_currentDominator = alliance;
+		_currentDominators = alliance;
 		
 		if (_announcer != null) {
 			_announcer.cancel();
@@ -190,12 +185,8 @@ public class DomainRegion {
 		}
 	}
 	
-	public DominatingAlliance getWinning() {
-		if (_currentDominator == null) {
-			return null;
-		}
-		
-		return new DominatingAlliance(_currentDominator.getFounderName(), _currentDominator.getAllianceMembers(), _currentDominator.getTotalMembers());
+	public List<Team> getDominatingTeams() {
+		return _currentDominators;
 	}
 	
 }

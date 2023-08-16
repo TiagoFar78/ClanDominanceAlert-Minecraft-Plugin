@@ -1,5 +1,7 @@
 package redehexen.clanDominanceAlert.teams;
 
+import java.util.List;
+
 public class Team {
 	
 	private String _name;
@@ -23,6 +25,16 @@ public class Team {
 	
 	public void removePlayer() {
 		_totalPlayers--;
+	}
+	
+	public static int getTeamsTotalMembers(List<Team> teams) {
+		int totalMembers = 0;
+		
+		for (Team team : teams) {
+			totalMembers += team.getPlayers();
+		}
+		
+		return totalMembers;
 	}
 
 }
