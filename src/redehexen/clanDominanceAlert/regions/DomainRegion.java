@@ -17,9 +17,9 @@ public class DomainRegion {
 	private List<Team> _teams = new ArrayList<Team>();
 	private List<Team> _currentDominators = new ArrayList<Team>();
 	
-	public DomainRegion() {
-		// TESTING ONLY
-	}
+//	public DomainRegion() {
+//		// TESTING ONLY
+//	}
 	
 //	>-------------------------------------{ Region }-------------------------------------<
 	
@@ -180,8 +180,8 @@ public class DomainRegion {
 			_announcer.cancel();
 		}
 		
-		if (alliance != null) {
-			// TODO _announcer = new DominatorAnnouncer(alliance, _name);
+		if (alliance.size() > 0) {
+			_announcer = new DominatorAnnouncer(alliance, _name);
 		}
 	}
 	

@@ -1,20 +1,20 @@
 package redehexen.clanDominanceAlert.regions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
 import redehexen.clanDominanceAlert.managers.ConfigManager;
-import redehexen.clanDominanceAlert.teams.Alliance;
 import redehexen.clanDominanceAlert.teams.Team;
 
 public class DominatorAnnouncer {
 	
 	private static int TICKS_IN_SECOND = 20;
 	
-	private Alliance _alliance;
+	private List<Team> _alliance;
 	private String _regionName;
 	private BukkitTask _task;
 	private int _announcesAmount = 0;
@@ -41,15 +41,17 @@ public class DominatorAnnouncer {
 			public void run() {
 				_announcesAmount++;
 				
-				boolean hasAllies = _alliance.hasAllies();
+				boolean hasAllies = _alliance.size() > 0;
 				String dominatingMessage = !hasAllies ? configManager.getDominatingMessageSingular() : configManager.getDominatingMessagePlural();
 				
-				String allianceClans = getAllianceClans(configManager);
+				int totalMembers = Team.getTeamsTotalMembers(_alliance);
+				
+				String allianceClans = formatClansList(configManager);
 				int dominationMinutes = announcementDelay * _announcesAmount / 60;
 				
 				dominatingMessage = dominatingMessage.replace("{AREA}", _regionName);
 				dominatingMessage = dominatingMessage.replace("{TIME}", Integer.toString(dominationMinutes));
-				dominatingMessage = dominatingMessage.replace("{MEMBERS}", Integer.toString(_alliance.getTotalMembers()));
+				dominatingMessage = dominatingMessage.replace("{MEMBERS}", Integer.toString(totalMembers));
 				dominatingMessage = dominatingMessage.replace("{CLAN}", allianceClans);
 				
 				Bukkit.broadcastMessage(dominatingMessage);
@@ -61,18 +63,23 @@ public class DominatorAnnouncer {
 		
 	}
 	
-	private String getAllianceClans(ConfigManager configManager) {
+	private String formatClansList(ConfigManager configManager) {
 		String teamJoiner = configManager.getDominatingTeamJoinerMessage();
 		String lastJoiner = configManager.getDominatingLastJoinerMessage();
 		
-		List<String> alliedTeams = _alliance.getAllianceMembers();
+		List<String> teamsNames = _alliance.stream().map(Team::getName).collect(Collectors.toList());
+		int size = _alliance.size();
 		
-		String result = String.join(teamJoiner, alliedTeams);
-		if (!alliedTeams.isEmpty()) {
-			result += lastJoiner;
+		if (size == 1) {
+			return teamsNames.get(0);
 		}
 		
-		result += _alliance.getFounderName();
+		String result = "";
+		for (int i = 0; i < size - 2; i++) {
+			result += teamsNames.get(i) + teamJoiner;
+		}
+		
+		result += teamsNames.get(size - 2) + lastJoiner + teamsNames.get(size - 1);
 		
 		return result;
 	}
