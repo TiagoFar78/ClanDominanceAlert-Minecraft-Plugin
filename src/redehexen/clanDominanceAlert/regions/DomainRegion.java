@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.bukkit.Location;
 
+import redehexen.clanDominanceAlert.managers.TeamsManager;
 import redehexen.clanDominanceAlert.teams.Alliance;
+import redehexen.clanDominanceAlert.teams.DominatingAlliance;
 import redehexen.clanDominanceAlert.teams.Team;
 
 public class DomainRegion {
@@ -14,8 +16,14 @@ public class DomainRegion {
 	private String _name;
 	private Region _region;
 	private DominatorAnnouncer _announcer = null;
-	private Hashtable<String, Alliance> _alliances = new Hashtable<String, Alliance>();
-	private Alliance _currentDominator = null;
+	private List<Team> _teams = new ArrayList<Team>();
+	private List<Team> _currentDominators = new ArrayList<Team>();
+	
+	public DomainRegion() {
+		// TESTING ONLY
+	}
+	
+//	>-------------------------------------{ Region }-------------------------------------<
 	
 	public DomainRegion(String name, Location loc1, Location loc2) {
 		_name = name;
@@ -30,33 +38,53 @@ public class DomainRegion {
 		return _region.isOnRegion(loc);
 	}
 	
+//	>--------------------------------------{ Team }--------------------------------------<
+	
+	private boolean alreadyExists(Team team) {
+		for (Team savedTeam : _teams) {
+			if (savedTeam.getName().equals(team.getName())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private void createTeam(Team team) {
+		_teams.add(team);
+	}
+	
+	private void addPlayerToTeam(Team team) {
+		team.addPlayer();
+	}
+	
+	private void removePlayerFromTeam(Team team) {
+		team.removePlayer();
+	}
+	
+	private boolean isTeamExtint(Team team) {
+		return team.getPlayers() == 0;
+	}
+	
+	private void deleteTeam(Team team) {
+		for (int i = 0; i < _teams.size(); i++) {
+			if (_teams.get(i).getName().equals(team.getName())) {
+				_teams.remove(i);
+				return;
+			}
+		}
+	}
+	
+//	>-------------------------------------{ Player }-------------------------------------<
+	
 	public void playerEntered(Team team) {
 		System.out.println("Player enter for team: " + team.getName());
 		
-		String teamName = team.getName();
-		
-		if (!_alliances.containsKey(teamName)) {
-			System.out.println("Criou uma equipa nova");
-			Alliance alliance = new Alliance(teamName);
-			_alliances.put(teamName, alliance);
-			
-			for (String alliedName : team.getAlliedTeams()) {
-				System.out.println("Nao devia entrar aqui lol");
-				if (_alliances.containsKey(alliedName)) {
-					Alliance alliedAlliance = _alliances.get(alliedName);
-					alliance.addPlayersFromAlliedTeam(alliedAlliance.getFounderMembers());
-					alliedAlliance.addTeam(teamName);
-				}
-			}
+		if (!alreadyExists(team)) {
+			createTeam(team);
 		}
 		
-		_alliances.get(teamName).addPlayerFromFounder();
-		
-		for (String alliedName : team.getAlliedTeams()) {
-			if (_alliances.containsKey(alliedName)) {
-				_alliances.get(alliedName).addPlayerFromAlliedTeam();
-			}
-		}
+		addPlayerToTeam(team);
 		
 		setNewDominator();
 	}
@@ -64,72 +92,62 @@ public class DomainRegion {
 	public void playerLeft(Team team) {
 		System.out.println("Player left for team: " + team.getName());
 		
-		Alliance alliance = _alliances.get(team.getName());
+		removePlayerFromTeam(team);
 		
-		alliance.removePlayerFromFounder();
-		
-		if (!alliance.founderTeamIsAlive()) {
-			List<String> teamAllies = new ArrayList<String>();
-			teamAllies.addAll(alliance.getAllianceMembers());
-			for (String alliedName : teamAllies) {
-				_alliances.get(alliedName).removeTeam(team.getName());
-			}
-			
-			_alliances.remove(team.getName());
-		}
-		
-		for (String alliedName : team.getAlliedTeams()) {
-			if (_alliances.containsKey(alliedName)) {
-				_alliances.get(alliedName).removePlayerFromAlliedTeam();
-			}
+		if (isTeamExtint(team)) {
+			deleteTeam(team);
 		}
 		
 		setNewDominator();
 	}
 	
-	public void removeAlliance(String team1Name, String team2Name) {
-		Alliance team1Alliance = _alliances.get(team1Name);
-		Alliance team2Alliance = _alliances.get(team2Name);
-		
-		team1Alliance.removeTeam(team2Name);
-		team2Alliance.removeTeam(team1Name);
-		
-		team1Alliance.removePlayersFromAlliedTeam(team2Alliance.getFounderMembers());
-		team2Alliance.removePlayersFromAlliedTeam(team1Alliance.getFounderMembers());		
-		
+//	>-------------------------------------{ Allies }-------------------------------------<
+	
+	public void updateAllies() {
 		setNewDominator();
 	}
+
+//	>---------------------------------{ New Dominator }---------------------------------<
 	
-	public void addAlliance(String team1Name, String team2Name) {
-		Alliance team1Alliance = _alliances.get(team1Name);
-		Alliance team2Alliance = _alliances.get(team2Name);
-		
-		team1Alliance.addTeam(team2Name);
-		team2Alliance.addTeam(team1Name);
-		
-		team1Alliance.addPlayersFromAlliedTeam(team2Alliance.getFounderMembers());
-		team2Alliance.addPlayersFromAlliedTeam(team1Alliance.getFounderMembers());
-		
-		setNewDominator();
-	}
-	
-	private Alliance calculateNewDominator() {
-		if (_alliances.size() == 0) {
+	private List<Team> calculateNewDominator() {
+		if (_teams.size() == 0) {
 			return null;
 		}
 		
-		Alliance bestAlliance = _currentDominator;
-		int highestMembers = bestAlliance == null ? 0 : bestAlliance.getTotalMembers();
-		for (Alliance alliance : _alliances.values()) {
-			int totalMembers = alliance.getTotalMembers();
+		
+		
+		return bestAlliance;
+	}
+	
+	private List<Team> getMostPopulatedTeamAlliance(List<Team> fixedTeams, int firstIndex) {
+		List<Team> mostPopulatedTeams = new ArrayList<Team>();
+		int mostPlayers = 0;
+		
+		List<Team> newFixedTeams = new ArrayList<Team>(fixedTeams);
+		
+		boolean addedANewTeam = false;
+		for (int i = firstIndex; i < _teams.size(); i++) {
+			Team team = _teams.get(i);
 			
-			if (totalMembers > highestMembers) {
-				bestAlliance = alliance;
-				highestMembers = totalMembers;
+			if (isAlliedToEveryTeam(newFixedTeams, team)) {
+				newFixedTeams.add(team);
+				addedANewTeam = true;
+				firstIndex = i;
 			}
 		}
 		
-		return bestAlliance;
+		if (!addedANewTeam) {
+			return newFixedTeams;
+		}
+		
+		return getMostPopulatedTeamAlliance(newFixedTeams, firstIndex);
+	}
+	
+	private boolean isAlliedToEveryTeam(List<Team> alliedTeams, Team team) {
+		List<String> alliesNames = TeamsManager.getAlliesNames(team.getName());
+		List<String> alliedTeamsNames = alliedTeams.stream().map(Team::getName).toList();
+		
+		return alliesNames.containsAll(alliedTeamsNames);
 	}
 	
 	private boolean isSameDominator(Alliance newDominator) {
@@ -167,8 +185,17 @@ public class DomainRegion {
 		}
 		
 		if (alliance != null) {
-			_announcer = new DominatorAnnouncer(alliance, _name);
+			//_announcer = new DominatorAnnouncer(alliance, _name);
+			System.out.println("schedulou o announcer");
 		}
+	}
+	
+	public DominatingAlliance getWinning() {
+		if (_currentDominator == null) {
+			return null;
+		}
+		
+		return new DominatingAlliance(_currentDominator.getFounderName(), _currentDominator.getAllianceMembers(), _currentDominator.getTotalMembers());
 	}
 	
 }

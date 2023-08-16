@@ -1,27 +1,28 @@
 package redehexen.clanDominanceAlert.teams;
 
-import java.util.List;
-
 public class Team {
 	
 	private String _name;
-	private List<String> _alliesNames;
+	private int _totalPlayers = 0;
 	
-	public Team(String name, List<String> alliesNames) {
+	public Team(String name) {
 		_name = name;
-		_alliesNames = alliesNames;
 	}
 	
 	public String getName() {
 		return _name;
 	}
 	
-	public List<String> getAlliedTeams() {
-		return _alliesNames;
+	public int getPlayers() {
+		return _totalPlayers;
 	}
 	
-	public boolean isAllied(String teamName) {
-		return _alliesNames.contains(teamName);
+	public void addPlayer() {
+		_totalPlayers++;
+	}
+	
+	public void removePlayer() {
+		_totalPlayers--;
 	}
 
 }

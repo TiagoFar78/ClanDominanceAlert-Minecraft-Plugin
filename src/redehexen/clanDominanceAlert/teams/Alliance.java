@@ -19,12 +19,10 @@ public class Alliance {
 	}
 	
 	public boolean addTeam(String teamName) {
-		System.out.println("A alianca do founder " + _founderTeamName + " recebeu o alidado " + teamName);
 		return _alliedTeams.add(teamName);
 	}
 	
 	public boolean removeTeam(String teamName) {
-		System.out.println("A alianca do founder " + _founderTeamName + " perdeu o alidado " + teamName);
 		return _alliedTeams.remove(teamName);
 	}
 	
