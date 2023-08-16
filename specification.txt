@@ -1,0 +1,9 @@
+Dominar Área:
+- Consiste em selecionar uma área cuja qual poderá ser dominada após 5 minutos dentro da mesma, não haverão recompensas por
+dominar pois isto é provido por outro plugin, este dominação de área deverá anunciar no broadcast o nome do clã que está
+dominando e a cada 5 minutos irá enviar uma nova mensagem dizendo há quanto tempo o clã está a dominar e quantas pessoas
+estão lá, se um clã for aliado de outro ele irá falar que os 2 clãs ou mais estão dominando e dirá também a quantidade de
+membros em cada um
+
+(O clã nTT está dominando a MinaPvP há 10 minutos com 5 membros) = caso o clã esteja sozinho
+(Os clãs nTT e VdT estão dominando a MinaPvP há 10 minutos com 7 membros) = caso sejam dois clãs ou mais
