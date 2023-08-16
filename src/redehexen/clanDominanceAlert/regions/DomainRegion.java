@@ -109,7 +109,7 @@ public class DomainRegion {
 	
 	private List<Team> calculateNewDominator() {
 		if (_teams.size() == 0) {
-			return null;
+			return _teams;
 		}
 		
 		return getMostPopulatedTeamAlliance();
