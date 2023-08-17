@@ -38,22 +38,32 @@ public class DomainRegion {
 	
 //	>--------------------------------------{ Team }--------------------------------------<
 	
-	private boolean alreadyExists(Team team) {
-		for (Team savedTeam : _teams) {
-			if (savedTeam.getName().equals(team.getName())) {
-				return true;
+	private Team getTeam(String teamName) {
+		for (Team team : _teams) {
+			if (team.getName().equals(teamName)) {
+				return team;
 			}
 		}
 		
-		return false;
+		return null;
 	}
 	
-	private void createTeam(Team team) {
+	private boolean alreadyExists(Team team) {
+		return team != null;
+	}
+	
+	private Team createTeam(String teamName) {
+		Team team = new Team(teamName);
 		_teams.add(team);
+		
+		return team;
 	}
 	
 	private void addPlayerToTeam(Team team) {
+		System.out.println("Player adicionado");
 		team.addPlayer();
+
+		System.out.println("Agora a equipa tem " + team.getPlayers());
 	}
 	
 	private void removePlayerFromTeam(Team team) {
@@ -75,9 +85,14 @@ public class DomainRegion {
 	
 //	>-------------------------------------{ Player }-------------------------------------<
 	
-	public void playerEntered(Team team) {
+	public void playerEntered(String teamName) {
+		System.out.println("player enter");
+		
+		Team team = getTeam(teamName);
 		if (!alreadyExists(team)) {
-			createTeam(team);
+			System.out.println("Nao existia equipa");
+			team = createTeam(teamName);
+			System.out.println("entao criou uma e temos " + _teams.size());
 		}
 		
 		addPlayerToTeam(team);
@@ -85,11 +100,18 @@ public class DomainRegion {
 		setNewDominator();
 	}
 	
-	public void playerLeft(Team team) {
-		removePlayerFromTeam(team);
+	public void playerLeft(String teamName) {
+		Team team = getTeam(teamName);
 		
+		System.out.println("player left");
+
+		System.out.println("Members before removal " + team.getPlayers());
+		removePlayerFromTeam(team);
+		System.out.println("Members after removal " + team.getPlayers());
 		if (isTeamExtint(team)) {
+			System.out.println("Acabou a equipa");
 			deleteTeam(team);
+			System.out.println("Ainda contem na lista? tamanho " + (_teams.size()));
 		}
 		
 		setNewDominator();
@@ -153,7 +175,7 @@ public class DomainRegion {
 		return alliesNames.containsAll(alliedTeamsNames);
 	}
 	
-	private boolean isSameDominator(List<Team> newDominators) {
+	private boolean isSameDominator(List<Team> newDominators) {		
 		if (_currentDominators.size() == 0) {
 			return newDominators.size() == 0;
 		}

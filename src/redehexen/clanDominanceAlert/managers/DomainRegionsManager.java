@@ -10,7 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
 import redehexen.clanDominanceAlert.regions.DomainRegion;
-import redehexen.clanDominanceAlert.teams.Team;
 
 public class DomainRegionsManager {
 
@@ -59,8 +58,8 @@ public class DomainRegionsManager {
 			return;
 		}
 		
-		Team team = TeamsManager.getTeam(playerName);
-		if (team == null) {
+		String teamName = TeamsManager.getTeam(playerName);
+		if (teamName == null) {
 			return;
 		}
 		
@@ -69,36 +68,36 @@ public class DomainRegionsManager {
 			boolean isLocToOnRegion = region.isOnRegion(locTo);
 			
 			if (!isLocFromOnRegion && isLocToOnRegion) {
-				playerEntered(region, team);
+				playerEntered(region, teamName);
 				return;
 			}
 			
 			if (isLocFromOnRegion && !isLocToOnRegion) {
-				playerLeft(region, team);
+				playerLeft(region, teamName);
 				return;
 			}
 		}
 	}
 	
 	public static void detectAbandoning(Location loc, String playerName) {	
-		Team team = TeamsManager.getTeam(playerName);
-		if (team == null) {
+		String teamName = TeamsManager.getTeam(playerName);
+		if (teamName == null) {
 			return;
 		}
 		
 		for (DomainRegion region : getRegions()) {
 			if (region.isOnRegion(loc)) {
-				playerLeft(region, team);
+				playerLeft(region, teamName);
 				return;
 			}
 		}
 	}
 	
-	private static void playerEntered(DomainRegion region, Team team) {
-		region.playerEntered(team);
+	private static void playerEntered(DomainRegion region, String teamName) {
+		region.playerEntered(teamName);
 	}
 	
-	private static void playerLeft(DomainRegion region, Team team) {
+	private static void playerLeft(DomainRegion region, String team) {
 		region.playerLeft(team);
 	}
 
