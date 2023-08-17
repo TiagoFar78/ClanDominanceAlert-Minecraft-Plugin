@@ -184,6 +184,8 @@ public class DomainRegion {
 			_announcer = new DominatorAnnouncer(alliance, _name);
 		}
 	}
+
+//	>------------------------------------{ Testing }------------------------------------<
 	
 	public List<Team> getDominatingTeams() {
 		return _currentDominators;
