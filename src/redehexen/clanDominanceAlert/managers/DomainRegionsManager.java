@@ -93,6 +93,12 @@ public class DomainRegionsManager {
 		}
 	}
 	
+	public static void removedAllies() {
+		for (DomainRegion region : getRegions()) {
+			region.updateAllies();
+		}
+	}
+	
 	private static void playerEntered(DomainRegion region, String teamName) {
 		region.playerEntered(teamName);
 	}
