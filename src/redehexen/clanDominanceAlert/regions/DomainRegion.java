@@ -86,13 +86,9 @@ public class DomainRegion {
 //	>-------------------------------------{ Player }-------------------------------------<
 	
 	public void playerEntered(String teamName) {
-		System.out.println("player enter");
-		
 		Team team = getTeam(teamName);
 		if (!alreadyExists(team)) {
-			System.out.println("Nao existia equipa");
 			team = createTeam(teamName);
-			System.out.println("entao criou uma e temos " + _teams.size());
 		}
 		
 		addPlayerToTeam(team);
@@ -102,16 +98,11 @@ public class DomainRegion {
 	
 	public void playerLeft(String teamName) {
 		Team team = getTeam(teamName);
-		
-		System.out.println("player left");
 
-		System.out.println("Members before removal " + team.getPlayers());
 		removePlayerFromTeam(team);
-		System.out.println("Members after removal " + team.getPlayers());
+		
 		if (isTeamExtint(team)) {
-			System.out.println("Acabou a equipa");
 			deleteTeam(team);
-			System.out.println("Ainda contem na lista? tamanho " + (_teams.size()));
 		}
 		
 		setNewDominator();
@@ -127,7 +118,7 @@ public class DomainRegion {
 	
 	private List<Team> calculateNewDominator() {
 		if (_teams.size() == 0) {
-			return _teams;
+			return new ArrayList<Team>();
 		}
 		
 		List<Team> bestAlliance = new ArrayList<Team>();
@@ -197,12 +188,17 @@ public class DomainRegion {
 	}
 	
 	private void setNewDominator(List<Team> alliance) {
-		System.out.println("Vai comparar os dois");
+		System.out.println("Vai comparar os dois prev / new");
+		System.out.println(_currentDominators);
+		System.out.println(alliance);
 		if (isSameDominator(alliance)) {
 			return;
 		}
+		System.out.println("Passou");
 		
 		_currentDominators = alliance;
+		System.out.println("O atual ficou como:");
+		System.out.println(_currentDominators);
 		
 		if (_announcer != null) {
 			_announcer.cancel();
