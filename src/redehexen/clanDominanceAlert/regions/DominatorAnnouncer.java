@@ -27,15 +27,13 @@ public class DominatorAnnouncer {
 	}
 	
 	public void cancel() {
-		System.out.println("Cancelou a task");
 		_task.cancel();
 	}
 	
 	public void scheduleAnnouncement() {
 		ConfigManager configManager = ConfigManager.getInstance();
 		
-		int announcementDelay = configManager.getDominationAlertDelay();		
-		System.out.println("comecou a task");
+		int announcementDelay = configManager.getDominationAlertDelay();
 		_task = Bukkit.getScheduler().runTaskLater(ClanDominanceAlert.getClanDominanceAlert(), new Runnable() {
 			
 			@Override

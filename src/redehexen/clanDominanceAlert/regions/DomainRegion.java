@@ -60,10 +60,7 @@ public class DomainRegion {
 	}
 	
 	private void addPlayerToTeam(Team team) {
-		System.out.println("Player adicionado");
 		team.addPlayer();
-
-		System.out.println("Agora a equipa tem " + team.getPlayers());
 	}
 	
 	private void removePlayerFromTeam(Team team) {
@@ -179,26 +176,15 @@ public class DomainRegion {
 	}
 	
 	private void setNewDominator() {
-		List<Team> teams = calculateNewDominator();
-		
-		System.out.println("New dominators: ");
-		System.out.println(teams);
-		
-		setNewDominator(teams);
+		setNewDominator(calculateNewDominator());
 	}
 	
 	private void setNewDominator(List<Team> alliance) {
-		System.out.println("Vai comparar os dois prev / new");
-		System.out.println(_currentDominators);
-		System.out.println(alliance);
 		if (isSameDominator(alliance)) {
 			return;
 		}
-		System.out.println("Passou");
 		
 		_currentDominators = alliance;
-		System.out.println("O atual ficou como:");
-		System.out.println(_currentDominators);
 		
 		if (_announcer != null) {
 			_announcer.cancel();
