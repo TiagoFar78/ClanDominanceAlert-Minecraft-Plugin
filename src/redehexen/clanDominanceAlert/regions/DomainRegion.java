@@ -130,7 +130,7 @@ public class DomainRegion {
 			return _teams;
 		}
 		
-		List<Team> bestAlliance = null;
+		List<Team> bestAlliance = new ArrayList<Team>();
 		int maxMembers = 0;
 		
 		for (List<Team> alliance : getAlliances()) {
@@ -188,10 +188,16 @@ public class DomainRegion {
 	}
 	
 	private void setNewDominator() {
-		setNewDominator(calculateNewDominator());
+		List<Team> teams = calculateNewDominator();
+		
+		System.out.println("New dominators: ");
+		System.out.println(teams);
+		
+		setNewDominator(teams);
 	}
 	
 	private void setNewDominator(List<Team> alliance) {
+		System.out.println("Vai comparar os dois");
 		if (isSameDominator(alliance)) {
 			return;
 		}
