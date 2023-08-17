@@ -34,20 +34,20 @@ class DomainRegionsDominatorTests {
 		
 		Team team1 = new Team(TESTING_TEAM_NAME);
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
@@ -61,42 +61,42 @@ class DomainRegionsDominatorTests {
 		
 		Team team1 = new Team(TESTING_TEAM_NAME);
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		
@@ -110,42 +110,42 @@ class DomainRegionsDominatorTests {
 		Team team1 = new Team(TESTING_TEAM_NAME);
 		Team team2 = new Team(TESTING_TEAM_NAME + "2");
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team2);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team2);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		
@@ -160,70 +160,70 @@ class DomainRegionsDominatorTests {
 		Team team2 = new Team(TESTING_TEAM_NAME + "2");
 		Team team3 = new Team(TESTING_TEAM_NAME + "3");
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team2);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team2);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team3);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team2);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team2);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team3);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team3);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team3);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team3);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		
@@ -245,21 +245,21 @@ class DomainRegionsDominatorTests {
 		allies.add(TESTING_TEAM_NAME);
 		TeamsManager.addAllies(TESTING_TEAM_NAME + "3", allies);
 		
-		domainRegion.playerEntered(team1);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team2);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerEntered(team3);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
@@ -270,21 +270,21 @@ class DomainRegionsDominatorTests {
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team2);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team2);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "2");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team3);
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team3);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "3");
 		
 		expectedWinners = new ArrayList<Team>();
 		
@@ -297,7 +297,6 @@ class DomainRegionsDominatorTests {
 		
 		Team team1 = new Team(TESTING_TEAM_NAME);
 		Team team2 = new Team(TESTING_TEAM_NAME + "2");
-		Team team3 = new Team(TESTING_TEAM_NAME + "3");
 		
 		List<String> allies = new ArrayList<String>();
 		allies.add(TESTING_TEAM_NAME + "2");
@@ -308,10 +307,10 @@ class DomainRegionsDominatorTests {
 		TeamsManager.addAllies(TESTING_TEAM_NAME + "3", allies);
 		TeamsManager.addAllies(TESTING_TEAM_NAME + "2", allies);
 		
-		domainRegion.playerEntered(team1);
-		domainRegion.playerEntered(team3);
-		domainRegion.playerEntered(team2);
-		domainRegion.playerEntered(team2);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "3");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
 		
 		List<Team>expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
@@ -348,16 +347,16 @@ class DomainRegionsDominatorTests {
 		allies.add(TESTING_TEAM_NAME + "2");
 		TeamsManager.addAllies(TESTING_TEAM_NAME + "4", allies);
 		
-		domainRegion.playerEntered(team1);
-		domainRegion.playerEntered(team1);
-		domainRegion.playerEntered(team1);
-		domainRegion.playerEntered(team2);
-		domainRegion.playerEntered(team2);
-		domainRegion.playerEntered(team2);
-		domainRegion.playerEntered(team2);
-		domainRegion.playerEntered(team3);
-		domainRegion.playerEntered(team4);
-		domainRegion.playerEntered(team4);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
+		domainRegion.playerEntered(TESTING_TEAM_NAME);
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "2");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "3");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "4");
+		domainRegion.playerEntered(TESTING_TEAM_NAME + "4");
 		
 		List<Team> expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
@@ -366,8 +365,8 @@ class DomainRegionsDominatorTests {
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team1);
-		domainRegion.playerLeft(team1);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
+		domainRegion.playerLeft(TESTING_TEAM_NAME);
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
@@ -376,8 +375,8 @@ class DomainRegionsDominatorTests {
 		
 		assertTrue(areSameAlliances(domainRegion.getDominatingTeams(), expectedWinners));
 		
-		domainRegion.playerLeft(team4);
-		domainRegion.playerLeft(team4);
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "4");
+		domainRegion.playerLeft(TESTING_TEAM_NAME + "4");
 		
 		expectedWinners = new ArrayList<Team>();
 		expectedWinners.add(team1);
