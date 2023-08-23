@@ -40,8 +40,8 @@ public class DominatorAnnouncer {
 			public void run() {
 				_announcesAmount++;
 				
-				boolean hasAllies = _alliance.size() > 0;
-				String dominatingMessage = !hasAllies ? configManager.getDominatingMessageSingular() : configManager.getDominatingMessagePlural();
+				boolean isSingleDominator = _alliance.size() > 1;
+				String dominatingMessage = !isSingleDominator ? configManager.getDominatingMessageSingular() : configManager.getDominatingMessagePlural();
 				
 				int totalMembers = Team.getTeamsTotalMembers(_alliance);
 				
