@@ -32,6 +32,15 @@ public class TeamsManager {
 		return clan.getAllies();
 	}
 	
+	public static String getColoredTag(String tag) {
+		Clan clan = simpleClans.getClanManager().getClan(tag);
+		if (clan == null) {
+			return null;
+		}
+		
+		return clan.getColorTag();
+	}
+	
 //	TESTING ONLY
 	
 	private static Hashtable<String, List<String>> allies = new Hashtable<String, List<String>>();

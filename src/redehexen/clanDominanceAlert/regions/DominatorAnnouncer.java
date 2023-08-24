@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import redehexen.clanDominanceAlert.ClanDominanceAlert;
 import redehexen.clanDominanceAlert.managers.ConfigManager;
+import redehexen.clanDominanceAlert.managers.TeamsManager;
 import redehexen.clanDominanceAlert.teams.Team;
 
 public class DominatorAnnouncer {
@@ -66,7 +67,7 @@ public class DominatorAnnouncer {
 		String teamJoiner = configManager.getDominatingTeamJoinerMessage();
 		String lastJoiner = configManager.getDominatingLastJoinerMessage();
 		
-		List<String> teamsNames = _alliance.stream().map(Team::getName).collect(Collectors.toList());
+		List<String> teamsNames = _alliance.stream().map(team -> TeamsManager.getColoredTag(team.getName())).collect(Collectors.toList());
 		int size = _alliance.size();
 		
 		if (size == 1) {
